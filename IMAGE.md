@@ -15,6 +15,8 @@ docker push pjabadesco/docker-hlsdash-s3-mysql:latest
 docker tag pjabadesco/docker-hlsdash-s3-mysql:latest ghcr.io/pjabadesco/docker-hlsdash-s3-mysql:latest
 docker push ghcr.io/pjabadesco/docker-hlsdash-s3-mysql:latest
 
+## MISC
+
 docker run --rm -it -v $PWD:/home --entrypoint bash docker-hlsdash-s3-mysql:latest
 docker run -it --name mycontainer pjabadesco/docker-ffmpeg-r2 /bin/bash
 
