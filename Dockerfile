@@ -1,4 +1,5 @@
-FROM  nvidia/cuda:11.4.0-runtime-ubuntu20.04
+# FROM  nvidia/cuda:11.4.0-runtime-ubuntu20.04
+FROM  nvidia/cuda:12.0.0-runtime-ubuntu20.04
 
 RUN apt-get update && apt-get install -y \
   wget \
@@ -39,7 +40,7 @@ WORKDIR /root/nvidia/
 RUN git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg/
 WORKDIR /root/nvidia/ffmpeg/
 RUN apt install -y libx264-dev libx265-dev libfdk-aac-dev
-RUN ./configure --enable-gpl --enable-version3 --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-nonfree --enable-cuda-nvcc --enable-libnpp --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64
+RUN ./configure --enable-gpl --enable-version3 --enable-nvenc --enable-nvdec --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-nonfree --enable-cuda-nvcc --enable-libnpp --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64
 RUN make -j $(nproc)
 RUN make install
 # ffmpeg -y -hwaccel cuda -i input.file output.file
