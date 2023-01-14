@@ -29,20 +29,24 @@ RUN unzip awscliv2.zip
 RUN ./aws/install
 
 # Install ffmpeg
-RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends nvidia-cuda-toolkit
-RUN mkdir /root/nvidia/ && cd /root/nvidia/
-RUN apt install -y git
-RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
-RUN cd nv-codec-headers && make install
-RUN DEBIAN_FRONTEND=noninteractive apt install -y build-essential yasm cmake libtool libc6 libc6-dev unzip wget libnuma1 libnuma-dev
-WORKDIR /root/nvidia/
-# RUN git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg/
-RUN git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg/
-WORKDIR /root/nvidia/ffmpeg/
-RUN apt install -y libx264-dev libx265-dev libfdk-aac-dev
-RUN ./configure --enable-gpl --enable-version3 --enable-nvenc --enable-nvdec --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-nonfree --enable-cuda-nvcc --enable-libnpp --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64
-RUN make -j $(nproc)
-RUN make install
-# ffmpeg -y -hwaccel cuda -i input.file output.file
+RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y ffmpeg
+
+# RUN apt install -y --no-install-recommends nvidia-driver-525
+# # RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends nvidia-cuda-toolkit
+# RUN mkdir /root/nvidia/ && cd /root/nvidia/
+# RUN apt install -y git
+# RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
+# RUN cd nv-codec-headers && make install
+# RUN DEBIAN_FRONTEND=noninteractive apt install -y build-essential yasm cmake libtool libc6 libc6-dev unzip wget libnuma1 libnuma-dev
+# WORKDIR /root/nvidia/
+# # RUN git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg/
+# RUN git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg/
+# WORKDIR /root/nvidia/ffmpeg/
+# RUN apt install -y libx264-dev libx265-dev libfdk-aac-dev libssl-dev
+# RUN ./configure --enable-openssl --enable-gpl --enable-version3 --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-nonfree --enable-cuda-nvcc --enable-libnpp --extra-cflags=-I/usr/local/nvidia/include --extra-ldflags=-L/usr/local/nvidia/lib64
+# RUN make -j $(nproc)
+# RUN make install
+# # ffmpeg -y -hwaccel cuda -i input.file output.file
+
 
 WORKDIR /home
